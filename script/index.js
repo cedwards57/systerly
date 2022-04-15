@@ -1,6 +1,6 @@
 $(function() {
     jQuery.ajax({
-        url: '/assets/header.html',
+        url: '/templates/assets/header.html',
         dataType: 'html',
         success: function(data) {
             $('header').html(data);
@@ -11,7 +11,7 @@ $(function() {
         }
     });
     jQuery.ajax({
-        url: '/assets/footer.html',
+        url: '/templates/assets/footer.html',
         dataType: 'html',
         success: function(data) {
             $('footer').html(data);
