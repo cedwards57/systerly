@@ -8,7 +8,8 @@ from flask_login import (
     login_user,
     logout_user,
 )
-from db import db, User
+from db import db
+from db_func import *
 
 load_dotenv(find_dotenv())
 
@@ -26,7 +27,7 @@ with app.app_context():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(user_id)
+    return get_user(user_id)
 
 
 @login_manager.unauthorized_handler
@@ -57,12 +58,11 @@ def logout():
 def login():
     entered_name = flask.request.form["username"]
     entered_pw = flask.request.form["password"]
-    this_user = User.query.filter_by(username=entered_name).first()
-    if not this_user or (this_user.password != entered_pw):
+    if not verify_user(entered_name, entered_pw):
         flask.flash("Incorrect username or password.")
         return flask.redirect("/")
     else:
-        login_user(this_user)
+        login_user(get_user(entered_name))
         return flask.redirect("/userpage")
 
 
@@ -70,13 +70,14 @@ def login():
 def signup():
     entered_name = flask.request.form["username"]
     entered_pw = flask.request.form["password"]
-    this_user = User.query.filter_by(username=entered_name).first()
+    entered_sys = flask.request.form["system"]
+    this_user = get_user(entered_name)
 
     if this_user:
         flask.flash("This username is taken.")
         return flask.redirect("/create")
     else:
-        new_user = User(username=entered_name, password=entered_pw)
+        new_user = set_user(entered_name,entered_name,entered_sys)
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
