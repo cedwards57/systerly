@@ -83,7 +83,6 @@ def signup():
         return flask.redirect("/")
 
 @app.route("/")
-@login_required
 def index():
     return flask.render_template("index.html", myvar=5)
 
