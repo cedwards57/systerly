@@ -1,6 +1,6 @@
 $(function() {
     $.ajax({
-        url: '/static/header.html',
+        url: '/static/html/header.html',
         dataType: 'html',
         success: function(data) {
             $('header').html(data);
@@ -10,7 +10,7 @@ $(function() {
         }
     });
     $.ajax({
-        url: '/static/footer.html',
+        url: '/static/html/footer.html',
         dataType: 'html',
         success: function(data) {
             $('footer').html(data);

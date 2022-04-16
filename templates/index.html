@@ -2,10 +2,10 @@
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script type="text/javascript" src="/static/render.js"></script>
-    <script type="text/javascript" src="/static/index.js"></script>
-    <link rel="stylesheet" href="/static/base.css" type="text/css" />
-    <link rel="stylesheet" href="/static/index.css" type="text/css" />
+    <script type="text/javascript" src="/static/js/render.js"></script>
+    <script type="text/javascript" src="/static/js/index.js"></script>
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/index.css" type="text/css" />
     <link rel="shortcut icon" href="#">
     <title>Systerly!</title>
 </head>
@@ -13,22 +13,22 @@
     <header></header>
     Welcome, {{ sysname }}!
     <div class="main">
-        <form id="newMessage">
+        <form>
             <select id="poster" required>
                 {% for alter in alter_list %}
                 <option value="{{alter.alter}}">{{alter.alter}}</option>
                 {% endfor %}
             </select><br/>
-            <input type="text" id="newMessage" height="100" width="200" placeholder="Enter a message...!"/><br/>
+            <input type="text" id="newMessage" placeholder="Enter a message...!"/><br/>
             <input type="button" value="Post Message" onclick="postMessage()">
         </form>
         <div id="messages">
         {% for message in message_list %}
-            From {{message["alter"]}} at {{message["message"].datetime}}:
-            {{message["message"].message}}
-            <form id="{{message['message'].id}}">
-                <input type="hidden" value="{{message['message'].id}}" name="message">
-                <input type="button" value="Archive Message" class="archiveMessage">
+            <form id="{{message['messageid']}}">
+            From {{message["alter"]}} at {{message["datetime"]}}:<br/>
+            {{message["messagetext"]}}<br/>
+                <input type="hidden" value="{{message['messageid']}}" name="message">
+                <input type="button" value="Archive Message" onclick="archiveMessage(this)">
             </form>
         {% endfor %}
     </div>

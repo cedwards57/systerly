@@ -11,6 +11,7 @@ from flask_login import (
 from db import db
 from db_func import *
 import json
+import datetime
 
 load_dotenv(find_dotenv())
 
@@ -91,45 +92,24 @@ def signup():
 @app.route("/")
 @login_required
 def index():
-    message_list = [{"message": get_message(i), "alter": get_alter_name(i.alter_id)} for i in get_messages(current_user.username)]
+    messages = get_messages(current_user.username)
+    message_list = [{
+            "messageid": get_message(i).id,
+            "messagetext": get_message(i).message,
+            "alter": get_alter_name(get_message(i).alter_id),
+            "datetime": get_message(i).datetime.strftime("%I:%M:%S %m/%d/%y")
+        } for i in messages]
     alter_list = [get_alter(i) for i in get_alters(current_user.username)]
     return flask.render_template("index.html", sysname=current_user.sysname, alter_list=alter_list, message_list=message_list)
-
-@app.route("/profile")
-@login_required
-def profile():
-    alter_list = [get_alter(i).alter for i in get_alters(current_user.username)]
-    return flask.render_template("profile.html", sysname=current_user.sysname, alter_list=alter_list)
-
-@app.route("/save-alter", methods=["POST"])
-@login_required
-def save_alter():
-    alter_name = json.loads(flask.request.data)["alterName"]
-    new_alter = set_alter(current_user.username,alter_name)
-    db.session.add(new_alter)
-    db.session.commit()
-    jsonreturn = flask.jsonify({"msg": "Alter added successfully!"})
-    return jsonreturn
-
-@app.route("/about")
-def about():
-    return flask.render_template("about.html")
-
-@app.route("/desc")
-def desc():
-    return flask.render_template("desc.html")
-
-@app.route("/checklist")
-def checklist():
-    return flask.render_template("check.html")
 
 @app.route("/post-message", methods=["POST"])
 @login_required
 def post_message():
     message = json.loads(flask.request.data)["newMessage"]
     alter = json.loads(flask.request.data)["alter"]
-    to_archive = set_message(current_user.username,alter,message)
-    to_archive.archived = True
+    now = datetime.datetime.now()
+    to_post = set_message(current_user.username,get_alter_id(current_user.username,alter),message,now)
+    db.session.add(to_post)
     db.session.commit()
     jsonreturn = flask.jsonify({"msg": "Message posted!"})
     return jsonreturn
@@ -143,5 +123,48 @@ def archive_message():
     db.session.commit()
     jsonreturn = flask.jsonify({"msg": "Message archived!"})
     return jsonreturn
+
+@app.route("/profile")
+@login_required
+def profile():
+    alter_list = [{"name": get_alter(i).alter, "id": get_alter(i).id} for i in get_alters(current_user.username)]
+    return flask.render_template("profile.html", sysname=current_user.sysname, alter_list=alter_list)
+
+@app.route("/save-alter", methods=["POST"])
+@login_required
+def save_alter():
+    alter_name = json.loads(flask.request.data)["alterName"]
+    new_alter = set_alter(current_user.username,alter_name)
+    db.session.add(new_alter)
+    db.session.commit()
+    jsonreturn = flask.jsonify({"msg": "Alter added successfully!"})
+    return jsonreturn
+
+@app.route("/remove-alter", methods=["POST"])
+@login_required
+def remove_alter():
+    alter_id = json.loads(flask.request.data)["alterId"]
+    rm_messages = get_messages_from(current_user.username,alter_id)
+    for message_id in rm_messages:
+        message = get_message(message_id)
+        db.session.delete(message)
+    rm_alter = get_alter(alter_id)
+    db.session.delete(rm_alter)
+    db.session.commit()
+    jsonreturn = flask.jsonify({"msg": "Alter removed successfully!"})
+    return jsonreturn
+
+@app.route("/about")
+def about():
+    return flask.render_template("about.html")
+
+@app.route("/desc")
+def desc():
+    return flask.render_template("desc.html")
+
+@app.route("/checklist")
+def checklist():
+    return flask.render_template("checklist.html")
+
 
 app.run(host="0.0.0.0", port=int(os.getenv("PORT", "8080")))

@@ -1,5 +1,6 @@
-$(".archiveMessage").click(function() {
-    var archiveId = $(this).parent().attr("id")
+function archiveMessage(clicked) {
+    var archiveId = $(clicked).parent().attr("id");
+    console.log(archiveId)
     $.ajax({
         type: "POST",
         url: "/archive-message",
@@ -8,17 +9,19 @@ $(".archiveMessage").click(function() {
         datatype:"json",
         success: function(result) {
             alert(result.msg);
-            $(this).parent().append("<br/>Archived");
+            $("#" + archiveId).remove();
         },
         error: function(_, error){
             console.error(error);
         }
-    });
- });
+    })
+ };
 
- function postMessage() {
-    var newMessage = $("#newMessage").val()
-    var alter = $("#poster").val()
+function postMessage() {
+    var newMessage = $("#newMessage").val();
+    console.log($("#newMessage"))
+    console.log(newMessage);
+    var alter = $("#poster").children("option:selected").val();
     let currentDate = new Date();
     var datetime = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds() + "  " + currentDate.getMonth() + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
     $.ajax({
@@ -30,7 +33,8 @@ $(".archiveMessage").click(function() {
         success: function(result) {
             alert(result.msg);
             $("#messages").prepend(
-                "From " + poster + " at " + datetime + ":\n" + newMessage + 
+                "From " + alter + " at " + datetime + ":\<br\/\>" +
+                newMessage + 
                 "\n\<form id=\"{{message['message'].id}}\"\>\n\<input type='hidden' value=\"{{message['message'].id}}\" name=\"message\"\>\n\<input type=\"button\" value=\"Archive Message\" class=\"archiveMessage\"\>\n\<\/form\>"
             );
         },

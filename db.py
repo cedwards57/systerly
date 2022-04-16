@@ -36,7 +36,7 @@ class Message(db.Model):
     datetime = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
     def __repr__(self):
-        return "<Message %r %r>" % (self.username, self.alter)
+        return "<Message %r %r %r %r %r %r>" % (self.id, self.username, self.alter_id, self.message, self.archived, self.datetime)
 
     def get_msg(self):
         return self.msg

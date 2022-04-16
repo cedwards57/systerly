@@ -18,7 +18,15 @@ def get_message(message_id):
     return Message.query.filter_by(id=message_id).first()
 
 def get_messages(username):
-    messages = Message.query.filter_by(username=username).all()
+    messages = Message.query.filter_by(username=username,archived=False).order_by(Message.id.desc()).all()
+    return [message.id for message in messages]
+
+def get_archived_messages(username):
+    messages = Message.query.filter_by(username=username,archived=True).order_by(Message.id.desc()).all()
+    return [message.id for message in messages]
+
+def get_all_messages(): # for testing only
+    messages = Message.query.all()
     return [message.id for message in messages]
 
 def get_messages_from(username,alter_id):
@@ -29,7 +37,8 @@ def get_alter(alter_id):
     return System.query.filter_by(id=alter_id).first()
 
 def get_alter_id(username,alter_name):
-    return System.query.filter_by(username=username,alter=alter_name).first()
+    this = System.query.filter_by(username=username,alter=alter_name).first()
+    return this.id
 
 def get_alter_name(alter_id):
     alter = System.query.filter_by(id=alter_id).first()
@@ -54,10 +63,10 @@ def set_alter(username,alter):
         next = high.id + 1
     return System(id=next,username=username, alter=alter)
 
-def set_message(username,alter_id,message):
+def set_message(username,alter_id,message,now):
     high = Message.query.order_by(Message.id.desc()).first()
     if high == None:
         next = 0
     else:
         next = high.id + 1
-    return Message(id=next,username=username, alter_id=alter_id, message=message, archived=False)
+    return Message(id=next,username=username, alter_id=alter_id, message=message, archived=False, datetime=now)
