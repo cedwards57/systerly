@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="/static/render.js"></script>
+    <script type="text/javascript" src="/static/login.js"></script>
+    <link rel="stylesheet" href="/static/base.css" type="text/css" />
+    <link rel="stylesheet" href="/static/login.css" type="text/css" />
+    <link rel="shortcut icon" href="#">
+    <title>Systerly!</title>
+    </head>
+    <body>
+        <header></header>
+        <div class="main">
+        <form method="POST" action="/login-post">
+            <input type="text" name="username" placeholder="Username"/><br/>
+            <input type="password" name="password" placeholder="Password"/><br/>
+            <input type="submit" value="Log In">
+        </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+            <li>
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="loglink"><a href="/signup">Sign Up</a></div>
+    </div>
+    <footer></footer>
+    </body>
+</html>

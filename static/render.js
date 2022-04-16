@@ -1,5 +1,5 @@
 $(function() {
-    jQuery.ajax({
+    $.ajax({
         url: '/static/header.html',
         dataType: 'html',
         success: function(data) {
@@ -9,7 +9,7 @@ $(function() {
             console.error(error);
         }
     });
-    jQuery.ajax({
+    $.ajax({
         url: '/static/footer.html',
         dataType: 'html',
         success: function(data) {

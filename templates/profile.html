@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="/static/render.js"></script>
+    <script type="text/javascript" src="/static/profile.js"></script>
+    <link rel="stylesheet" href="/static/base.css" type="text/css" />
+    <link rel="stylesheet" href="/static/profile.css" type="text/css" />
+    <link rel="shortcut icon" href="#">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Systerly!</title>
+</head>
+<body>
+    <header></header>
+    <div class="main">
+        <form>
+            <input type="text" id="newalter" placeholder="Alter Name"/><br/>
+            <input type="button" value="Add New Alter" onclick="saveAlter()">
+        </form>
+        {{ sysname }}'s System:
+        <ul>
+        {% for alter in alter_list %}
+            <li>{{alter}}</li>
+        {% endfor %}
+        <div id="next-alter"></div>
+    </ul>
+    </div>
+    <a href="/logout">Log Out</a>
+    <footer></footer>
+</body>
+</html>
