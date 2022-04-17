@@ -4,36 +4,64 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="/static/js/render.js"></script>
     <script type="text/javascript" src="/static/js/index.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/index.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/regular.css" integrity="sha384-zkhEzh7td0PG30vxQk1D9liRKeizzot4eqkJ8gB3/I+mZ1rjgQk+BSt2F6rT2c+I" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css" integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
+    <script src="/static/js/jscolor.js"></script>
+    <script>jscolor.presets.default = {format:'hex'};</script>
     <link rel="shortcut icon" href="#">
     <title>Systerly!</title>
 </head>
 <body>
-    <header></header>
-    Welcome, {{ sysname }}!
+    <header id="home"></header>
     <div class="main">
+        <div class="container">
+        <div class="row">
+        <div class="col-sm-4">
+        Welcome, {{ sysname }}!
+        <div class="newpost">
         <form>
             <select id="poster" required>
                 {% for alter in alter_list %}
                 <option value="{{alter.alter}}">{{alter.alter}}</option>
                 {% endfor %}
             </select><br/>
-            <input type="text" id="newMessage" placeholder="Enter a message...!"/><br/>
+            <textarea id="newMessage" placeholder="Enter a message...!"></textarea><br/>
             <input type="button" value="Post Message" onclick="postMessage()">
         </form>
+        </div>
         <div id="messages">
         {% for message in message_list %}
+        <div class="msg">
             <form id="{{message['messageid']}}">
-            From {{message["alter"]}} at {{message["datetime"]}}:<br/>
-            {{message["messagetext"]}}<br/>
-                <input type="hidden" value="{{message['messageid']}}" name="message">
+            <strong><span class="{{message['alter_id']}}" style="color: {{message['alter_color']}};">{{message["alter"]}}</span></strong><br/>
+            <span class="fas fa-calendar" aria-label="posted on"></span>&nbsp;{{message["date"]}}&nbsp;&nbsp;<span class="far fa-clock" aria-label="posted at"></span>&nbsp;{{message["time"]}}<br/>
+            {{message["messagetext"]|safe}}<br/>
                 <input type="button" value="Archive Message" onclick="archiveMessage(this)">
             </form>
+        </div>
         {% endfor %}
     </div>
     </div>
-    <a href="/logout">Log Out</a>
+    <div class="col-sm-4">
+    <div class="colors">
+        <form>
+            <select id="colorFor" required>
+                {% for alter in alter_list %}
+                <option value="{{alter.id}}">{{alter.alter}}</option>
+                {% endfor %}
+            </select><br/>
+            Color: <input id="colorpicker" data-jscolor="{}" class="jscolor jscolor-active" value="#000000">
+            <input type="button" value="Set Name Color" onclick="setColor()">
+        </form>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
     <footer></footer>
 </body>
 </html>

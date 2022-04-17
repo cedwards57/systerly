@@ -9,6 +9,7 @@ function saveAlter() {
        success: function(result) {
            alert(result.msg);
            $("#next-alter").append("<li>" + newAlter + "</li>");
+           $("#rmAlter").append("\<option value=\"" + newAlter + "\" id=\"" + result.alter_id + "\"\>" + newAlter + "\<\/option\>");
        },
        error: function(_, error){
            console.error(error);

@@ -97,7 +97,10 @@ def index():
             "messageid": get_message(i).id,
             "messagetext": get_message(i).message,
             "alter": get_alter_name(get_message(i).alter_id),
-            "datetime": get_message(i).datetime.strftime("%I:%M:%S %m/%d/%y")
+            "date": get_message(i).datetime.strftime("%m/%d/%y"),
+            "time": get_message(i).datetime.strftime("%I:%M:%S"),
+            "alter_id": get_message(i).alter_id,
+            "alter_color": get_alter(get_message(i).alter_id).color
         } for i in messages]
     alter_list = [get_alter(i) for i in get_alters(current_user.username)]
     return flask.render_template("index.html", sysname=current_user.sysname, alter_list=alter_list, message_list=message_list)
@@ -111,7 +114,7 @@ def post_message():
     to_post = set_message(current_user.username,get_alter_id(current_user.username,alter),message,now)
     db.session.add(to_post)
     db.session.commit()
-    jsonreturn = flask.jsonify({"msg": "Message posted!"})
+    jsonreturn = flask.jsonify({"msg": "Message posted!", "msgId": to_post.id})
     return jsonreturn
 
 @app.route("/archive-message", methods=["POST"])
@@ -122,6 +125,17 @@ def archive_message():
     to_archive.archived = True
     db.session.commit()
     jsonreturn = flask.jsonify({"msg": "Message archived!"})
+    return jsonreturn
+
+@app.route("/set-color", methods=["POST"])
+@login_required
+def set_color():
+    alter_id = json.loads(flask.request.data)["alterId"]
+    new_color = json.loads(flask.request.data)["newColor"]
+    this_alter = get_alter(alter_id)
+    this_alter.color = new_color
+    db.session.commit()
+    jsonreturn = flask.jsonify({"msg": "Color updated!"})
     return jsonreturn
 
 @app.route("/profile")
@@ -137,7 +151,7 @@ def save_alter():
     new_alter = set_alter(current_user.username,alter_name)
     db.session.add(new_alter)
     db.session.commit()
-    jsonreturn = flask.jsonify({"msg": "Alter added successfully!"})
+    jsonreturn = flask.jsonify({"msg": "Alter added successfully!", "alter_id": new_alter.id})
     return jsonreturn
 
 @app.route("/remove-alter", methods=["POST"])
@@ -165,6 +179,14 @@ def desc():
 @app.route("/checklist")
 def checklist():
     return flask.render_template("checklist.html")
+
+@app.route("/header")
+def header():
+    return flask.render_template("render/header.html",logged_in=current_user.is_authenticated)
+
+@app.route("/footer")
+def footer():
+    return flask.render_template("render/footer.html",logged_in=current_user.is_authenticated)
 
 
 app.run(host="0.0.0.0", port=int(os.getenv("PORT", "8080")))

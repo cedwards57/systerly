@@ -20,6 +20,7 @@ class System(db.Model):
     id = db.Column(db.Integer, primary_key="True")
     username = db.Column(db.ForeignKey(User.username))
     alter = db.Column(db.String(50))
+    color = db.Column(db.String(10))
 
     def __repr__(self):
         return "<System %r %r %r>" % (self.username, self.alter, self.id)

@@ -4,13 +4,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="/static/js/render.js"></script>
     <script type="text/javascript" src="/static/js/login.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/login.css" type="text/css" />
     <link rel="shortcut icon" href="#">
     <title>Systerly!</title>
     </head>
     <body>
-        <header></header>
+        <header id="login"></header>
         <div class="main">
         <form method="POST" action="/login-post">
             <input type="text" name="username" placeholder="Username"/><br/>
@@ -28,7 +29,6 @@
         </ul>
         {% endif %}
         {% endwith %}
-        <div class="loglink"><a href="/signup">Sign Up</a></div>
     </div>
     <footer></footer>
     </body>

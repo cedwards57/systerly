@@ -1,0 +1,46 @@
+:root {
+    --color1: #38d5a5;
+    --color2: #a3154e;
+    --color3: #ffdb4f;
+}
+
+body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    /* overflow:hidden; */
+    background-color: #333;
+}
+
+.nav a {
+    float: left;
+    padding: 12px 14px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #f2f2f2;
+}
+
+.nav a.current {
+    background-color: var(--color2);
+    color: white;
+}
+
+.nav a:hover {
+    background-color: var(--color3);
+    color: black;
+}
+
+.main {
+    padding: 30px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

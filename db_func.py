@@ -25,10 +25,6 @@ def get_archived_messages(username):
     messages = Message.query.filter_by(username=username,archived=True).order_by(Message.id.desc()).all()
     return [message.id for message in messages]
 
-def get_all_messages(): # for testing only
-    messages = Message.query.all()
-    return [message.id for message in messages]
-
 def get_messages_from(username,alter_id):
     messages = Message.query.filter_by(username=username,alter_id=alter_id).all()
     return [message.id for message in messages]
@@ -44,8 +40,12 @@ def get_alter_name(alter_id):
     alter = System.query.filter_by(id=alter_id).first()
     return alter.alter
 
+def get_alter_color(alter_id):
+    alter = System.query.filter_by(id=alter_id).first()
+    return alter.color
+
 def get_alters(username):
-    sys = System.query.filter_by(username=username).all()
+    sys = System.query.filter_by(username=username).order_by(System.alter.asc()).all()
     return [i.id for i in sys]
 
 def is_archived(message_id):
@@ -61,7 +61,7 @@ def set_alter(username,alter):
         next = 0
     else:
         next = high.id + 1
-    return System(id=next,username=username, alter=alter)
+    return System(id=next,username=username, alter=alter, color="#000000")
 
 def set_message(username,alter_id,message,now):
     high = Message.query.order_by(Message.id.desc()).first()

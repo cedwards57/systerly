@@ -1,0 +1,8 @@
+<nav class="nav footer">
+    {% if logged_in %}
+    <a id="logout" href="/logout">Log Out</a>
+    {% else %}
+    <a id="login" href="/login">Log In</a>
+    <a id="signup" href="/signup">Sign Up</a>
+    {% endif %}
+</nav>

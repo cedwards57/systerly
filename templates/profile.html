@@ -4,6 +4,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script type="text/javascript" src="/static/js/render.js"></script>
     <script type="text/javascript" src="/static/js/profile.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/profile.css" type="text/css" />
     <link rel="shortcut icon" href="#">
@@ -11,32 +12,41 @@
     <title>Systerly!</title>
 </head>
 <body>
-    <header></header>
+    <header id="profile"></header>
     <div class="main">
-        <form>
-            <input type="text" id="newAlter" placeholder="Alter Name"/><br/>
-            <input type="button" value="Add New Alter" onclick="saveAlter()">
-        </form>
-        {{ sysname }}'s System:
-        <ul>
-        {% for alter in alter_list %}
-            <li id="{{alter['id']}}x">{{alter['name']}}</li>
-        {% endfor %}
-        <div id="next-alter"></div>
-    </ul>
-    <hr/>
-
-    <form>
-        <select id="rmAlter" required>
+        <div class="container">
+        <div class="row">
+        <div class="col-sm-4">
+        <div class="addnew">
+            <form>
+                <input type="text" id="newAlter" placeholder="Alter Name"/><br/>
+                <input type="button" value="Add New Alter" onclick="saveAlter()">
+            </form>
+        </div>
+        </div>
+        <div class="col-sm-4">
+        <div class="system">
+            <p>{{ sysname }}'s System:</p>
+            <ul>
             {% for alter in alter_list %}
-            <option value="{{alter['name']}}" id="{{alter['id']}}">{{alter['name']}}</option>
+                <li id="{{alter['id']}}x">{{alter['name']}}</li>
             {% endfor %}
-        </select><br/>
-        <input type="button" value="Remove this alter" onclick="removeAlter()">
-    </form>
-
-    </div>
-    <a href="/logout">Log Out</a>
+            <div id="next-alter"></div>
+            </ul>
+        </div>
+        </div>
+        <div class="col-sm-4">
+        <div class="remove">
+            <form>
+                <select id="rmAlter" required>
+                    {% for alter in alter_list %}
+                    <option value="{{alter['name']}}" id="{{alter['id']}}">{{alter['name']}}</option>
+                    {% endfor %}
+                </select><br/>
+                <input type="button" value="Remove this alter" onclick="removeAlter()">
+            </form>
+        </div></div>
+    </div></div></div>
     <footer></footer>
 </body>
 </html>
