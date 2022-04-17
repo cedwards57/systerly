@@ -33,7 +33,7 @@ function postMessage() {
             success: function(result) {
                 alert(result.msg);
                 $("#messages").prepend(
-                    "\<div class=\"msg\"\>\<form id=\"" + result.msgId + "\"\>\<strong\>" + alter + "\<\/strong\>\<br\/\>" + datetime + "\<br\/\>" +
+                    "\<div class=\"msg\"\>\<form id=\"" + result.msgId + "\"\>\<strong\>\<span class=\"" + result.alterId + "\" style=\"color:" + result.alterColor + "\"\>" + alter + "\<\/span\>\<\/strong\>\<br\/\>" + datetime + "\<br\/\>" +
                     newMessage + 
                     "\<br\/\>\<input type=\"button\" value=\"Archive Message\" onclick=\"archiveMessage(this)\" \>\n\<\/form\>\<\/div\>"
                 );

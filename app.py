@@ -114,7 +114,7 @@ def post_message():
     to_post = set_message(current_user.username,get_alter_id(current_user.username,alter),message,now)
     db.session.add(to_post)
     db.session.commit()
-    jsonreturn = flask.jsonify({"msg": "Message posted!", "msgId": to_post.id})
+    jsonreturn = flask.jsonify({"msg": "Message posted!", "msgId": to_post.id, "alterColor": get_alter(to_post.alter_id).color, "alterId": to_post.alter_id})
     return jsonreturn
 
 @app.route("/archive-message", methods=["POST"])
