@@ -14,9 +14,9 @@
         <header id="login"></header>
         <div class="main">
         <form method="POST" action="/login-post">
-            <input type="text" name="username" placeholder="Username"/><br/>
-            <input type="password" name="password" placeholder="Password"/><br/>
-            <input type="submit" value="Log In">
+            <input type="text" class="logtext" name="username" placeholder="Username"/><br/>
+            <input type="password" class="logtext" name="password" placeholder="Password"/><br/>
+            <input type="submit" class="btn" value="Log In">
         </form>
         {% with messages = get_flashed_messages() %}
         {% if messages %}

@@ -30,17 +30,17 @@
                 {% endfor %}
             </select><br/>
             <textarea id="newMessage" placeholder="Enter a message...!"></textarea><br/>
-            <input type="button" value="Post Message" onclick="postMessage()">
+            <input type="button" class="btn" value="Post Message" onclick="postMessage()">
         </form>
         </div>
         <div id="messages">
         {% for message in message_list %}
-        <div class="msg">
-            <form id="{{message['messageid']}}">
+        <div class="msg" id="{{message['messageid']}}">
+            <form>
             <strong><span class="{{message['alter_id']}}" style="color: {{message['alter_color']}};">{{message["alter"]}}</span></strong><br/>
             <span class="fas fa-calendar" aria-label="posted on"></span>&nbsp;{{message["date"]}}&nbsp;&nbsp;<span class="far fa-clock" aria-label="posted at"></span>&nbsp;{{message["time"]}}<br/>
             {{message["messagetext"]|safe}}<br/>
-                <input type="button" value="Archive Message" onclick="archiveMessage(this)">
+                <input type="button" class="btn" value="Archive Message" onclick="archiveMessage(this)">
             </form>
         </div>
         {% endfor %}
@@ -54,9 +54,10 @@
                 <option value="{{alter.id}}">{{alter.alter}}</option>
                 {% endfor %}
             </select><br/>
-            Color: <input id="colorpicker" data-jscolor="{}" class="jscolor jscolor-active" value="#000000">
-            <input type="button" value="Set Name Color" onclick="setColor()">
+            <input id="colorpicker" data-jscolor="{}" class="jscolor jscolor-active" value="#000000">
+            <input type="button" class="btn" value="Set Name Color" onclick="setColor()">
         </form>
+        Welcome to Systerly! This is your tool for sending messages or creating reminders for other members of your system when you might not be around to tell them yourself. Be sure to keep your login information somewhere safe but memorable!
     </div>
     </div>
     </div>

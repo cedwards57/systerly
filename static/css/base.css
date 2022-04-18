@@ -1,14 +1,19 @@
 :root {
-    --color1: #38d5a5;
+    --color1: #ADEDDC;
     --color2: #a3154e;
     --color3: #ffdb4f;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     margin: 0;
     padding: 0;
+    min-height: 100%;
 }
 
 .nav {
@@ -29,11 +34,28 @@ body {
     color: white;
 }
 
-.nav a:hover {
+.nav a:not(.current):hover {
     background-color: var(--color3);
     color: black;
 }
 
 .main {
     padding: 30px;
+    background-color: var(--color1);
+    min-height: 400px;
+}
+
+.btn {
+    margin-top: 10px;
+    background-color: #888;
+    color: #f2f2f2;
+}
+
+.btn:hover {
+    background-color: var(--color2);
+    color: #f2f2f2;
+}
+
+.logtext {
+    margin-top: 10px;
 }

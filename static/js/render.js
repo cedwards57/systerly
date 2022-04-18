@@ -18,6 +18,7 @@ $(function() {
         success: function(data) {
             $('footer').html(data);
             $("#" + page).addClass("current");
+            $("#" + page).removeAttr("href");
         },
         error: function(_, error){
             console.error(error);

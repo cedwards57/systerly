@@ -7,7 +7,7 @@ function saveAlter() {
        contentType:"application/json",
        datatype:"json",
        success: function(result) {
-           alert(result.msg);
+           console.log(result.msg);
            $("#next-alter").append("<li>" + newAlter + "</li>");
            $("#rmAlter").append("\<option value=\"" + newAlter + "\" id=\"" + result.alter_id + "\"\>" + newAlter + "\<\/option\>");
        },
@@ -28,7 +28,7 @@ function removeAlter() {
             contentType:"application/json",
             datatype:"json",
             success: function(result) {
-                alert(result.msg);
+                console.log(result.msg);
                 $("#" + rmAlter + "x").remove();
                 $("#" + rmAlter).remove();
             },

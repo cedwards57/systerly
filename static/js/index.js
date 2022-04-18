@@ -1,5 +1,5 @@
 function archiveMessage(clicked) {
-    var archiveId = $(clicked).parent().attr("id");
+    var archiveId = $(clicked).parent().parent().attr("id");
     console.log(archiveId)
     $.ajax({
         type: "POST",
@@ -8,7 +8,7 @@ function archiveMessage(clicked) {
         contentType:"application/json",
         datatype:"json",
         success: function(result) {
-            alert(result.msg);
+            console.log(result.msg);
             $("#" + archiveId).remove();
         },
         error: function(_, error){
@@ -31,11 +31,11 @@ function postMessage() {
             contentType:"application/json",
             datatype:"json",
             success: function(result) {
-                alert(result.msg);
+                console.log(result.msg);
                 $("#messages").prepend(
-                    "\<div class=\"msg\"\>\<form id=\"" + result.msgId + "\"\>\<strong\>\<span class=\"" + result.alterId + "\" style=\"color:" + result.alterColor + "\"\>" + alter + "\<\/span\>\<\/strong\>\<br\/\>" + datetime + "\<br\/\>" +
+                    "\<div class=\"msg\" id=\"" + result.msgId + "\"\>\<form\>\<strong\>\<span class=\"" + result.alterId + "\" style=\"color:" + result.alterColor + "\"\>" + alter + "\<\/span\>\<\/strong\>\<br\/\>" + datetime + "\<br\/\>" +
                     newMessage + 
-                    "\<br\/\>\<input type=\"button\" value=\"Archive Message\" onclick=\"archiveMessage(this)\" \>\n\<\/form\>\<\/div\>"
+                    "\<br\/\>\<input type=\"button\" class=\"btn\" value=\"Archive Message\" onclick=\"archiveMessage(this)\" \>\n\<\/form\>\<\/div\>"
                 );
             },
             error: function(_, error){
@@ -57,7 +57,7 @@ function setColor() {
         contentType:"application/json",
         datatype:"json",
         success: function(result) {
-            alert(result.msg);
+            console.log(result.msg);
             $("." + alterId).css("color", newColor);
         },
         error: function(_, error){

@@ -20,7 +20,7 @@
         <div class="addnew">
             <form>
                 <input type="text" id="newAlter" placeholder="Alter Name"/><br/>
-                <input type="button" value="Add New Alter" onclick="saveAlter()">
+                <input type="button" class="btn" value="Add New Alter" onclick="saveAlter()">
             </form>
         </div>
         </div>
@@ -43,7 +43,7 @@
                     <option value="{{alter['name']}}" id="{{alter['id']}}">{{alter['name']}}</option>
                     {% endfor %}
                 </select><br/>
-                <input type="button" value="Remove this alter" onclick="removeAlter()">
+                <input type="button" class="btn" value="Remove this alter" onclick="removeAlter()">
             </form>
         </div></div>
     </div></div></div>

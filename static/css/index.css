@@ -2,8 +2,28 @@
 
 #messages {}
 
-.msg {}
+#newMessage {
+    margin-top: 8px;
+}
+
+.msg {
+    padding: 15px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    background-color: #e8e8e8;
+    margin: 8px 0;
+}
+
+.msg strong {
+    margin-bottom: 10px;
+
+}
 
 .colors {
+    padding-left: 15%;
+    max-width: 250px;
+}
 
+#colorpicker {
+    margin-top: 10px;
 }
